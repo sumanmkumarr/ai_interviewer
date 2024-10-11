@@ -1,0 +1,6 @@
+flask
+flask_cors
+openai==0.27.0
+faster_whisper
+sentence_transformers
+python-dotenv
