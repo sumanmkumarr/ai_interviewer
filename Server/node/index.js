@@ -1,34 +1,24 @@
-// server.js
-
+// index.js
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const candidateRoutes = require('./routes/routes'); // Import the routes
+const interviewRoutes = require('./routes/routes');
+const cors = require('cors'); // To allow cross-origin requests from your React frontend
 
 const app = express();
-const PORT = 4000; // Use a different port to avoid conflict with Python backend
 
-// MongoDB connection URI
-const mongoURI = 'mongodb://localhost:27017/ai-interview';
+// Middleware
+app.use(express.json());
+app.use(cors()); // Enable CORS for your React frontend
 
-// Connect to MongoDB
-mongoose.connect(mongoURI);  // Removed deprecated options
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', () => {
-  console.log('Connected to MongoDB');
-});
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/interviewDB')
+  .then(() => console.log('MongoDB connected'))
+  .catch((error) => console.error('MongoDB connection error:', error));
 
-// Middleware setup
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Use candidate routes
-app.use('/api', candidateRoutes);
+app.use('/', interviewRoutes);
 
 // Start the server
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`Node.js server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -108,12 +108,13 @@ def transcribe_audio():
 @app.route('/generate_question', methods=['POST'])
 def generate_next_question():
     data = request.json
+    print(data)
     topic = data.get("topic", "")
     candidate_name = data.get("candidate_name", "Candidate")
 
     # Check if a valid session is active
-    if candidate_name not in sessions:
-        return jsonify({"error": "Invalid session. Please start a new session."}), 400
+    # if candidate_name not in sessions:
+    #     return jsonify({"error": "Invalid session. Please start a new session."}), 400
 
     # Generate a new question based on the topic
     next_question = generate_question(topic, candidate_name)

@@ -1,10 +1,10 @@
+// routes/routes.js
 const express = require('express');
-const authController = require('../controllers/authcontroller');
+const authcontroller = require('../controllers/authcontroller');
 
 const router = express.Router();
 
-router.post('/store_candidate', authController.storeCandidate);
-router.post('/update_interview_data', authController.updateInterviewData);
-router.post('/saveinterviewdata', authController.saveInterviewData);
+router.get('/', authcontroller.test);
+router.post('/store_interview', authcontroller.storeInterviewData);
 
 module.exports = router;
